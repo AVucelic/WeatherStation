@@ -3,7 +3,7 @@
 - [ ] Kristina Marasovic 
 - [ ] Janko Leskovac
 - [ ] Arian Vucelic
-- [ ] ...
+- [ ] Amra Rrahi
 - [ ] Ejup Elezi
 - [ ] ...
 
