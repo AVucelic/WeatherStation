@@ -1,4 +1,4 @@
-# WeatherStation800G0 - Group Members
+# WeatherStation801G1 - Group Members
 
 - [ ] Kristina Marasovic 
 - [ ] Janko Leskovac
