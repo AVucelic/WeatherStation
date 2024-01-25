@@ -4,6 +4,6 @@
 - [ ] Janko Leskovac
 - [ ] Arian Vucelic
 - [ ] Roko Hafner
-- [ ] ...
+- [ ] ..
 - [ ] ...
 
