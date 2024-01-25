@@ -5,5 +5,5 @@
 - [ ] Arian Vucelic
 - [ ] Amra Rrahi
 - [ ] Ejup Elezi
-- [ ] ...
+- [ ] Roko Hafner
 
