@@ -22,8 +22,10 @@ public class AWTUI extends Frame {
     private Label celsiusField; // put current celsius reading here
     private Label kelvinField; // put current kelvin reading here
     public Panel panel;
-    
-    //store label values in this map
+    private Label label = null;
+    TemperatureSensor sensor = new TemperatureSensor();
+
+    // store label values in this map
     private EnumMap<TemperatureUnit, Label> labelMap;
 
     /**
@@ -35,16 +37,6 @@ public class AWTUI extends Frame {
         return celsiusField;
     }
 
-    
-    /**
-     * Method that sets celsiusField to a new value
-     * 
-     * @param celsiusField
-     */
-    public void setCelsiusField(Label celsiusField) {
-        this.celsiusField = celsiusField;
-    }
-
     /**
      * Returns the value of kelvin readings
      * 
@@ -52,15 +44,6 @@ public class AWTUI extends Frame {
      */
     public Label getKelvinField() {
         return kelvinField;
-    }
-
-        /**
-     * Method that sets kelvinField to a new value
-     * 
-     * @param kelvinField
-     */
-    public void setKelvinField(Label kelvinField) {
-        this.kelvinField = kelvinField;
     }
 
     /*
@@ -75,7 +58,7 @@ public class AWTUI extends Frame {
      */
     public AWTUI() {
         super("Weather Station");
-        //initializes map
+        // initializes map
         labelMap = new EnumMap<>(TemperatureUnit.class);
 
         /*
@@ -94,9 +77,34 @@ public class AWTUI extends Frame {
          * Loop through the units on TemperatureUnit & Set up Kelvin & Celsius display.
          */
         for (TemperatureUnit unit : TemperatureUnit.values()) {
+            double value = unit.get(sensor.read());
             panel = createPanel(unit);
-            this.add(panel);
+            label = setLabel(unit.name(), panel);
+            labelMap.put(unit, label);
+            setLabelValues(unit, unit.get(value));
+            label.setFont(new Font(Font.SERIF, Font.PLAIN, 72));
+            this.add(panel, label);
         }
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    double temperatue = sensor.read();
+                    for (TemperatureUnit unit : TemperatureUnit.values()) {
+                        double value = unit.get(temperatue);
+                        setLabelValues(unit, value);
+                    }
+                    try {
+                        Thread.sleep(1000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        thread.start();
 
         /*
          * Set up the window's default close operation and pack its elements.
@@ -117,6 +125,7 @@ public class AWTUI extends Frame {
 
     /**
      * Sets the labels
+     * 
      * @param unit
      * @param value
      */
