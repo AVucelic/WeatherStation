@@ -16,11 +16,15 @@
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.EnumMap;
 
 public class AWTUI extends Frame {
     private Label celsiusField; // put current celsius reading here
     private Label kelvinField; // put current kelvin reading here
     public Panel panel;
+    
+    //store label values in this map
+    private EnumMap<TemperatureUnit, Label> labelMap;
 
     /**
      * Returns the value of celsius readings
@@ -31,14 +35,6 @@ public class AWTUI extends Frame {
         return celsiusField;
     }
 
-    /**
-     * Method that sets celsiusField to a new value
-     * 
-     * @param celsiusField
-     */
-    public void setCelsiusField(Label celsiusField) {
-        this.celsiusField = celsiusField;
-    }
 
     /**
      * Returns the value of kelvin readings
@@ -49,14 +45,6 @@ public class AWTUI extends Frame {
         return kelvinField;
     }
 
-    /**
-     * Method that sets kelvinField to a new value
-     * 
-     * @param kelvinField
-     */
-    public void setKelvinField(Label kelvinField) {
-        this.kelvinField = kelvinField;
-    }
 
     /*
      * A Font object contains information on the font to be used to
@@ -70,6 +58,8 @@ public class AWTUI extends Frame {
      */
     public AWTUI() {
         super("Weather Station");
+        //initializes map
+        labelMap = new EnumMap<>(TemperatureUnit.class);
 
         /*
          * WeatherStation frame is a grid of 1 row by an indefinite number
@@ -106,6 +96,15 @@ public class AWTUI extends Frame {
          */
         pack();
         setVisible(true);
+    }
+
+    /**
+     * Sets the labels
+     * @param unit
+     * @param value
+     */
+    private void setLabelValues(TemperatureUnit unit, double value) {
+        labelMap.get(unit).setText(String.format("%6.2f", value));
     }
 
     /***
