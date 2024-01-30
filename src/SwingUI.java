@@ -104,7 +104,7 @@ public class SwingUI extends JFrame {
     // }
 
     private void setJLable(TemperatureUnit unit, double value) {
-        
+
     }
 
     /**
