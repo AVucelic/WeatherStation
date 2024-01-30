@@ -20,7 +20,6 @@ import java.awt.event.*;
 public class AWTUI extends Frame {
     private Label celsiusField; // put current celsius reading here
     private Label kelvinField; // put current kelvin reading here
-    public Panel panel;
 
     /**
      * Returns the value of celsius readings
@@ -84,12 +83,20 @@ public class AWTUI extends Frame {
          */
 
         /*
-         * Loop through the units on TemperatureUnit & Set up Kelvin & Celsius display.
+         * Set up Kelvin display.
          */
-        for (TemperatureUnit unit : TemperatureUnit.values()) {
-            panel = createPanel(unit);
-            this.add(panel);
-        }
+        Panel panel = new Panel(new GridLayout(2, 1));
+        add(panel);
+        setLabel(" Kelvin ", panel);
+        kelvinField = setLabel("", panel);
+
+        /*
+         * Set up Celsius display.
+         */
+        panel = new Panel(new GridLayout(2, 1));
+        add(panel);
+        setLabel(" Celsius ", panel);
+        celsiusField = setLabel("", panel);
 
         /*
          * Set up the window's default close operation and pack its elements.
@@ -108,18 +115,6 @@ public class AWTUI extends Frame {
         setVisible(true);
     }
 
-    /***
-     * Creates a Panel/ sets the label and
-     * 
-     * @param {TemperatureUnit} unit - The Type of Unit used for to show temperature
-     * @return The panel that will be added to the view
-     */
-    public Panel createPanel(TemperatureUnit unit) {
-        Panel panel = new Panel(new GridLayout(2, 1));
-        setLabel(" " + unit + " ", panel);
-        return panel;
-    }
-
     /*
      * Create a Label with the initial value <title>, place it in
      * the specified <panel>, and return a reference to the Label
@@ -133,9 +128,5 @@ public class AWTUI extends Frame {
         panel.add(label);
 
         return label;
-    }
-
-    public static void main(String[] args) {
-        AWTUI a = new AWTUI();
     }
 }
