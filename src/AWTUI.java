@@ -35,6 +35,15 @@ public class AWTUI extends Frame {
         return celsiusField;
     }
 
+    
+    /**
+     * Method that sets celsiusField to a new value
+     * 
+     * @param celsiusField
+     */
+    public void setCelsiusField(Label celsiusField) {
+        this.celsiusField = celsiusField;
+    }
 
     /**
      * Returns the value of kelvin readings
@@ -45,6 +54,14 @@ public class AWTUI extends Frame {
         return kelvinField;
     }
 
+        /**
+     * Method that sets kelvinField to a new value
+     * 
+     * @param kelvinField
+     */
+    public void setKelvinField(Label kelvinField) {
+        this.kelvinField = kelvinField;
+    }
 
     /*
      * A Font object contains information on the font to be used to
