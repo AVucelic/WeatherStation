@@ -19,9 +19,11 @@ import java.awt.GridLayout;
 import java.util.EnumMap;
 import java.util.Map;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 //import java.text.DecimalFormat ;
 
@@ -82,14 +84,37 @@ public class SwingUI extends JFrame {
          */
         JPanel panel = null;
         JLabel label = null;
+        TemperatureSensor sensor = new TemperatureSensor();
+
         for (TemperatureUnit unit : TemperatureUnit.values()) {
-            label = createLabel(unit.name(), panel);
-            label.setFont(new Font("Arial", Font.PLAIN, 14));
-            jLabelMap.put(unit, label);
+            double value = unit.get(sensor.read());
             panel = createPanel(unit);
-            this.add(panel);
-            this.add(label);
+            label = createLabel(unit.name(), panel);
+            jLabelMap.put(unit, label);
+            setJLabel(unit, unit.get(value));
+            label.setFont(new Font(Font.SERIF, Font.PLAIN, 72));
+            this.add(panel, label);
         }
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    double temperatue = sensor.read();
+                    for (TemperatureUnit unit : TemperatureUnit.values()) {
+                        double value = unit.get(temperatue);
+                        setJLabel(unit, value);
+                    }
+                    try {
+                        Thread.sleep(1000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        thread.start();
         /*
          * Set up the frame's default close operation pack its elements,
          * and make the frame visible.
@@ -119,7 +144,7 @@ public class SwingUI extends JFrame {
      * @param unit  - temperature unit
      * @param value - temperatue unit value
      */
-    private void setJLable(TemperatureUnit unit, double value) {
+    private void setJLabel(TemperatureUnit unit, double value) {
         jLabelMap.get(unit).setText(String.format("%6.2f", value));
     }
 
@@ -145,8 +170,8 @@ public class SwingUI extends JFrame {
         label.setHorizontalAlignment(JLabel.CENTER);
         label.setVerticalAlignment(JLabel.TOP);
         label.setFont(labelFont);
+        label.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         panel.add(label);
-
         return label;
     }
 
