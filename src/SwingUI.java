@@ -102,7 +102,12 @@ public class SwingUI extends JFrame {
     // public void setCelsiusJLabel(double temperature) {
     // celsiusField.setText(String.format("%6.2f", temperature));
     // }
-
+    
+    /**
+     * Method to add a label
+     * @param unit - temperature unit 
+     * @param value - temperatue unit value
+     */
     private void setJLable(TemperatureUnit unit, double value) {
 
     }
