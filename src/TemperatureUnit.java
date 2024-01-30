@@ -8,7 +8,7 @@ public enum TemperatureUnit {
         this.conversionFactor = conversionFactor;
     }
 
-    public double get(int reading) {
+    public double get(double reading) {
         return (reading + conversionFactor) / 100.0;
     }
 
