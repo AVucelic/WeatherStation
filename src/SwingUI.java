@@ -29,6 +29,8 @@ public class SwingUI extends JFrame {
     private JLabel celsiusField; // put current celsius reading here
     private JLabel kelvinField; // put current kelvin reading here
 
+    private EnumMap<TemperatureUnit, JLabel> jLabelMap;
+
     /*
      * A Font object contains information on the font to be used to
      * render text.
@@ -41,6 +43,9 @@ public class SwingUI extends JFrame {
      */
     public SwingUI() {
         super("Weather Station");
+
+        // Initialize the EnumMap
+        jLabelMap = new EnumMap<>(TemperatureUnit.class);
 
         /*
          * WeatherStation frame is a grid of 1 row by an indefinite
@@ -76,9 +81,14 @@ public class SwingUI extends JFrame {
          * is not hardcoded
          */
         JPanel panel = null;
+        JLabel label = null;
         for (TemperatureUnit unit : TemperatureUnit.values()) {
+            label = createLabel(unit.name(), panel);
+            label.setFont(new Font("Arial", Font.PLAIN, 14));
+            jLabelMap.put(unit, label);
             panel = createPanel(unit);
             this.add(panel);
+            this.add(label);
         }
         /*
          * Set up the frame's default close operation pack its elements,
@@ -102,14 +112,15 @@ public class SwingUI extends JFrame {
     // public void setCelsiusJLabel(double temperature) {
     // celsiusField.setText(String.format("%6.2f", temperature));
     // }
-    
+
     /**
      * Method to add a label
-     * @param unit - temperature unit 
+     * 
+     * @param unit  - temperature unit
      * @param value - temperatue unit value
      */
     private void setJLable(TemperatureUnit unit, double value) {
-
+        jLabelMap.get(unit).setText(String.format("%6.2f", value));
     }
 
     /**
