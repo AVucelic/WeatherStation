@@ -1,3 +1,4 @@
+import java.util.Scanner;
 
 /**
  * Class for a simple computer based weather station that reports the current
@@ -70,9 +71,32 @@ public class WeatherStation implements Runnable {
      * Start the Thread.
      */
     public static void main(String[] args) {
-        WeatherStation ws = new WeatherStation();
-        Thread thread = new Thread(ws);
-        thread.start();
+        // WeatherStation ws = new WeatherStation();
+        // Thread thread = new Thr1ead(ws);
+        // thread.start();
+
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("Pick a GUI to launch the WeatherStation with...\n");
+            System.out.println("Press 1 to launch WS with AWTUI, or press 2 to launch WS with SwingUI");
+            int choice = scanner.nextInt();
+            if (choice == 1) {
+                AWTUI awtui = new AWTUI();
+                System.out.println("Launching WS with AWTUI Gui.");
+                break;
+            } else if (choice == 2) {
+                SwingUI swingUI = new SwingUI();
+
+                System.out.println("Launching WS with SwingUI Gui.");
+                break;
+            } else {
+                System.out.println("Invalid choice. Please pick 1 or 2.");
+            }
+        }
+
+        scanner.close();
+
     }
 
 }
