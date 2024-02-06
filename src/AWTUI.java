@@ -19,8 +19,7 @@ import java.awt.event.*;
 import java.util.EnumMap;
 
 public class AWTUI extends Frame implements WeatherStationUI {
-    public Panel panel;
-    private Label label = null;
+
     TemperatureSensor sensor = new TemperatureSensor();
 
     // store label values in this map
@@ -36,7 +35,7 @@ public class AWTUI extends Frame implements WeatherStationUI {
      * show the temperatures.
      */
     public AWTUI() {
-        super("Weather Station");
+        super("Weather Station - AWTUI");
         // initializes map
         labelMap = new EnumMap<>(TemperatureUnit.class);
 
@@ -46,52 +45,24 @@ public class AWTUI extends Frame implements WeatherStationUI {
          */
         setLayout(new GridLayout(1, 0));
 
-        /*
-         * There are two panels, one each for Kelvin and Celsius, added to the
-         * frame. Each Panel is a 2 row by 1 column grid, with the temperature
-         * name in the first row and the temperature itself in the second row.
-         */
-
-        /*
-         * Loop through the units on TemperatureUnit & Set up Kelvin & Celsius display.
+        labelMap = new EnumMap<>(TemperatureUnit.class);
+        this.setLayout(new GridLayout(1, 0));
+        Panel panel = null;
+        Label label = null;
         for (TemperatureUnit unit : TemperatureUnit.values()) {
-            double value = unit.get(sensor.read());
             panel = createPanel(unit);
             label = createLabel(unit.name(), panel);
             labelMap.put(unit, label);
-            setLabel(unit, unit.get(value));
             label.setFont(new Font(Font.SERIF, Font.PLAIN, 72));
             this.add(panel, label);
         }
-
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    double temperatue = sensor.read();
-                    for (TemperatureUnit unit : TemperatureUnit.values()) {
-                        double value = unit.get(temperatue);
-                        setLabel(unit, value);
-                    }
-                    try {
-                        Thread.sleep(1000);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-
-        thread.start();
-        */
-
         /*
          * Set up the window's default close operation and pack its elements.
          */
         addWindowListener(
                 new WindowAdapter() {
                     public void windowClosing(WindowEvent windowEvent) {
-                        System.exit(0);
+                        handleClosing();
                     }
                 });
 
@@ -100,6 +71,11 @@ public class AWTUI extends Frame implements WeatherStationUI {
          */
         pack();
         setVisible(true);
+    }
+
+    public void handleClosing() {
+        System.out.println("Closing the application....");
+        System.exit(0);
     }
 
     /**
@@ -137,7 +113,7 @@ public class AWTUI extends Frame implements WeatherStationUI {
 
         return label;
     }
-    
+
     /**
      * Update values for the AWTUI interface
      * 
@@ -146,11 +122,7 @@ public class AWTUI extends Frame implements WeatherStationUI {
     @Override
     public void update(int reading) {
         for (TemperatureUnit unit : TemperatureUnit.values()) {
-            setLabel( unit, unit.get(reading));
+            setLabel(unit, unit.get(reading));
         }
-    }
-
-    public static void main(String[] args) {
-        AWTUI a = new AWTUI();
     }
 }

@@ -41,6 +41,7 @@ public class WeatherStation implements Runnable {
 
         while (true) {
             reading = sensor.read();
+            wsui.update(reading);
 
             /*
              * System.out.printf prints formatted data on the output screen.
@@ -58,8 +59,8 @@ public class WeatherStation implements Runnable {
              * See docs.oracle.com/javase/tutorial/java/data/numberformat.html
              * for more information on formatting output.
              */
-            System.out.printf("Reading is %6.2f degrees C and %6.2f degrees K%n", TemperatureUnit.CELSIUS.get(reading),
-                    TemperatureUnit.KELVIN.get(reading));
+            // System.out.printf("Reading is%6.2f degrees C and %6.2f degrees K%n", TemperatureUnit.CELSIUS.get(reading),
+            //         TemperatureUnit.KELVIN.get(reading));
             try {
                 Thread.sleep(PERIOD);
             } catch (Exception e) {
