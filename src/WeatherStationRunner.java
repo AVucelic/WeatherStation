@@ -1,34 +1,28 @@
 import java.util.Scanner;
 
 public class WeatherStationRunner {
-    static WeatherStationUI gui;
-
-    public WeatherStationRunner() {
-
-    }
+    private static WeatherStationUI gui;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
+        System.out.print(
+                "Please specify which GUI you would like to launch the application with (t for TextUI, a for AWTUI, s for SwingUI): ");
         String choice = scanner.nextLine().trim().toLowerCase();
-        gui = new WeatherStationUI() {
 
-            @Override
-            public void update(int reading) {
-                switch (choice) {
-                    case "t":
-
-                        break;
-                    case "a":
-                        break;
-                    case "s":
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-        };
+        switch (choice) {
+            case "t":
+                gui = new TextUI();
+                break;
+            case "a":
+                gui = new AWTUI();
+                break;
+            case "s":
+                gui = new SwingUI();
+                break;
+            default:
+                gui = new AWTUI();
+                break;
+        }
 
         WeatherStation ws = new WeatherStation(gui);
         Thread thread = new Thread(ws);
