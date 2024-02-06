@@ -18,52 +18,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.EnumMap;
 
-public class AWTUI extends Frame {
-    private Label celsiusField; // put current celsius reading here
-    private Label kelvinField; // put current kelvin reading here
+public class AWTUI extends Frame implements WeatherStationUI {
     public Panel panel;
     private Label label = null;
     TemperatureSensor sensor = new TemperatureSensor();
 
     // store label values in this map
     private EnumMap<TemperatureUnit, Label> labelMap;
-
-    /**
-     * Returns the value of celsius readings
-     * 
-     * @return celsiusField
-     */
-    public Label getCelsiusField() {
-        return celsiusField;
-    }
-
-       /**
-     * Method that sets celsiusField to a new value
-     * 
-     * @param celsiusField
-     */
-    public void setCelsiusField(Label celsiusField) {
-        this.celsiusField = celsiusField;
-    }
-
-    /**
-     * Returns the value of kelvin readings
-     * 
-     * @return kelvinField
-     */
-    public Label getKelvinField() {
-        return kelvinField;
-    }
-
-           /**
-     * Method that sets kelvinField to a new value
-     * 
-     * @param kelvinField
-     */
-    public void setKelvinField(Label kelvinField) {
-        this.kelvinField = kelvinField;
-    }
-
     /*
      * A Font object contains information on the font to be used to
      * render text.
@@ -93,13 +54,12 @@ public class AWTUI extends Frame {
 
         /*
          * Loop through the units on TemperatureUnit & Set up Kelvin & Celsius display.
-         */
         for (TemperatureUnit unit : TemperatureUnit.values()) {
             double value = unit.get(sensor.read());
             panel = createPanel(unit);
-            label = setLabel(unit.name(), panel);
+            label = createLabel(unit.name(), panel);
             labelMap.put(unit, label);
-            setLabelValues(unit, unit.get(value));
+            setLabel(unit, unit.get(value));
             label.setFont(new Font(Font.SERIF, Font.PLAIN, 72));
             this.add(panel, label);
         }
@@ -111,7 +71,7 @@ public class AWTUI extends Frame {
                     double temperatue = sensor.read();
                     for (TemperatureUnit unit : TemperatureUnit.values()) {
                         double value = unit.get(temperatue);
-                        setLabelValues(unit, value);
+                        setLabel(unit, value);
                     }
                     try {
                         Thread.sleep(1000);
@@ -123,6 +83,7 @@ public class AWTUI extends Frame {
         });
 
         thread.start();
+        */
 
         /*
          * Set up the window's default close operation and pack its elements.
@@ -147,7 +108,7 @@ public class AWTUI extends Frame {
      * @param unit
      * @param value
      */
-    private void setLabelValues(TemperatureUnit unit, double value) {
+    private void setLabel(TemperatureUnit unit, double value) {
         labelMap.get(unit).setText(String.format("%6.2f", value));
     }
 
@@ -159,7 +120,7 @@ public class AWTUI extends Frame {
      */
     public Panel createPanel(TemperatureUnit unit) {
         Panel panel = new Panel(new GridLayout(2, 1));
-        setLabel(" " + unit + " ", panel);
+        createLabel(" " + unit + " ", panel);
         return panel;
     }
 
@@ -168,14 +129,25 @@ public class AWTUI extends Frame {
      * the specified <panel>, and return a reference to the Label
      * in case the caller wants to remember it.
      */
-    private Label setLabel(String title, Panel panel) {
+    private Label createLabel(String title, Panel panel) {
         Label label = new Label(title);
-
         label.setAlignment(Label.CENTER);
         label.setFont(labelFont);
         panel.add(label);
 
         return label;
+    }
+    
+    /**
+     * Update values for the AWTUI interface
+     * 
+     * @param reading - the value for the sensor that is currently reading
+     */
+    @Override
+    public void update(int reading) {
+        for (TemperatureUnit unit : TemperatureUnit.values()) {
+            setLabel( unit, unit.get(reading));
+        }
     }
 
     public static void main(String[] args) {
