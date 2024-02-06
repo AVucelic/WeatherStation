@@ -1,7 +1,8 @@
 import java.util.Scanner;
 
 public class WeatherStationRunner {
-    WeatherStationUI gui = null;
+    static WeatherStationUI gui;
+
     public WeatherStationRunner() {
 
     }
@@ -10,19 +11,26 @@ public class WeatherStationRunner {
         Scanner scanner = new Scanner(System.in);
 
         String choice = scanner.nextLine().trim().toLowerCase();
-        switch (choice) {
-            case "t":
+        gui = new WeatherStationUI() {
 
-                break;
-            case "a":
-                break;
-            case "s":
-                break;
-            default:
-                break;
-        }
+            @Override
+            public void update(int reading) {
+                switch (choice) {
+                    case "t":
 
-        WeatherStation ws = new WeatherStation();
+                        break;
+                    case "a":
+                        break;
+                    case "s":
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+        };
+
+        WeatherStation ws = new WeatherStation(gui);
         Thread thread = new Thread(ws);
         thread.start();
         scanner.close();
