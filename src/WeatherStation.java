@@ -21,12 +21,15 @@ public class WeatherStation implements Runnable {
 
     private int reading; // actual sensor reading. /* change */
 
+    private WeatherStationUI wsui;
+
     /*
      * When a WeatherStation object is created, it in turn creates the sensor
      * object it will use.
      */
-    public WeatherStation() {
+    public WeatherStation(WeatherStationUI wsui) {
         sensor = new TemperatureSensor();
+        this.wsui = wsui;
     }
 
     /*
@@ -62,41 +65,6 @@ public class WeatherStation implements Runnable {
             } catch (Exception e) {
             }
         }
-    }
-
-    /*
-     * Initial main method.
-     * Create the WeatherStation (Runnable).
-     * Embed the WeatherStation in a Thread.
-     * Start the Thread.
-     */
-    public static void main(String[] args) {
-        // WeatherStation ws = new WeatherStation();
-        // Thread thread = new Thr1ead(ws);
-        // thread.start();
-
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            System.out.println("Pick a GUI to launch the WeatherStation with...\n");
-            System.out.println("Press 1 to launch WS with AWTUI, or press 2 to launch WS with SwingUI");
-            int choice = scanner.nextInt();
-            if (choice == 1) {
-                AWTUI awtui = new AWTUI();
-                System.out.println("Launching WS with AWTUI Gui.");
-                break;
-            } else if (choice == 2) {
-                SwingUI swingUI = new SwingUI();
-
-                System.out.println("Launching WS with SwingUI Gui.");
-                break;
-            } else {
-                System.out.println("Invalid choice. Please pick 1 or 2.");
-            }
-        }
-
-        scanner.close();
-
     }
 
 }
