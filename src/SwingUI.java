@@ -17,20 +17,15 @@
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.EnumMap;
-import java.util.Map;
-
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 
 //import java.text.DecimalFormat ;
 
-public class SwingUI extends JFrame {
-    private JLabel celsiusField; // put current celsius reading here
-    private JLabel kelvinField; // put current kelvin reading here
-
+public class SwingUI extends JFrame implements WeatherStationUI{
+    TemperatureSensor sensor = new TemperatureSensor();
     private EnumMap<TemperatureUnit, JLabel> jLabelMap;
 
     /*
@@ -86,7 +81,7 @@ public class SwingUI extends JFrame {
         JLabel label = null;
         TemperatureSensor sensor = new TemperatureSensor();
 
-        for (TemperatureUnit unit : TemperatureUnit.values()) {
+       /* for (TemperatureUnit unit : TemperatureUnit.values()) {
             double value = unit.get(sensor.read());
             panel = createPanel(unit);
             label = createLabel(unit.name(), panel);
@@ -122,7 +117,7 @@ public class SwingUI extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setVisible(true);
-    }
+    } 
 
     /*
      * Set the label holding the Kelvin temperature.
@@ -175,8 +170,20 @@ public class SwingUI extends JFrame {
         return label;
     }
 
+        /**
+     * Update values for the AWTUI interface
+     * 
+     * @param reading - the value for the sensor that is currently reading
+     */
+    @Override
+    public void update(int reading) {
+        for (TemperatureUnit unit : TemperatureUnit.values()) {
+            setJLabel( unit, unit.get(reading));
+        }
+    }
+
     public static void main(String[] args) {
-        SwingUI test = new SwingUI();
+        SwingUI swing = new SwingUI();
 
     }
 }
