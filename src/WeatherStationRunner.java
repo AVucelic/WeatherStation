@@ -13,14 +13,14 @@ public class WeatherStationRunner {
             case "t":
                 gui = new TextUI();
                 break;
-            case "a":
-                gui = new AWTUI();
-                break;
+            // case "a":
+            // gui = new AWTUI();
+            // break;
             case "s":
                 gui = new SwingUI();
                 break;
             default:
-                gui = new AWTUI();
+                gui = new SwingUI();
                 break;
         }
 
