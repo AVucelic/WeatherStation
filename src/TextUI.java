@@ -1,4 +1,4 @@
-import java.util.EnumMap;
+
 
 public class TextUI implements WeatherStationUI {
 

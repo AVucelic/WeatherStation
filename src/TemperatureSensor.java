@@ -12,23 +12,23 @@
  * @author Michael J. Lutz
  * @author Kristina Marasovic
  */
-import java.util.Random;   // to simulate random temperature fluctuations.
+import java.util.Random; // to simulate random temperature fluctuations.
 
-public class TemperatureSensor {
+public class TemperatureSensor implements Sensor {
 
     /*
      * Min and max readings this sensor will actually report:
-     *    23315 =  -40 C
-     *    38315 =  110 C
+     * 23315 = -40 C
+     * 38315 = 110 C
      * and the default (initial reading)
-     *    29315 =  20 C
+     * 29315 = 20 C
      */
     private final static int MINREADING = 23315;
     private final static int MAXREADING = 38315;
     private final static int DEFAULT = 29315;
 
-    private int currentReading;         // current sensor reading
-    private boolean increasing = true;  // TRUE if temperature tending up
+    private int currentReading; // current sensor reading
+    private boolean increasing = true; // TRUE if temperature tending up
     private Random rand = new Random(); // simulate random temp, changes.
 
     /*
@@ -46,13 +46,13 @@ public class TemperatureSensor {
      * outside of the specific min. and max. temperatures.
      */
     public int read() {
-        final double CUTOFF = 0.8;     // 80% chance to continue temp. trend
-        final int MAXCHANGE = 200;     // maximum change in 1/100ths degree
-        final int MINCHANGE = 100;     // minimum change in 1/100ths degree
-        int temperatureChange;         // absolute value of the temp. change
+        final double CUTOFF = 0.8; // 80% chance to continue temp. trend
+        final int MAXCHANGE = 200; // maximum change in 1/100ths degree
+        final int MINCHANGE = 100; // minimum change in 1/100ths degree
+        int temperatureChange; // absolute value of the temp. change
 
         if (rand.nextDouble() > CUTOFF) {
-            increasing = !increasing;         // switch direction
+            increasing = !increasing; // switch direction
         }
 
         temperatureChange = rand.nextInt(MAXCHANGE - MINCHANGE)

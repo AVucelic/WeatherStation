@@ -1,3 +1,4 @@
+
 /**
  * Class for a (simulated) barometer. We assume the "real" barometer returns an
  * atmospheric read, as an integer number, which is calibrated to be a pressure
@@ -14,16 +15,16 @@
  * @author Michael J. Lutz, Kristina Marasovic <kristina.marasovic@rit.edu>
  *
  */
-import java.util.Random;   // to simulate random fluctuations.
+import java.util.Random; // to simulate random fluctuations.
 
-public class PressureSensor {
+public class PressureSensor implements Sensor {
 
-    private final int MIN = 2700;       // minimum reading
-    private final int MAX = 3200;       // maximum reading
-    private final int DEFAULT = 2992;   // default reading.
+    private final int MIN = 2700; // minimum reading
+    private final int MAX = 3200; // maximum reading
+    private final int DEFAULT = 2992; // default reading.
 
-    private int currentPressure;     // current sensor reading
-    private boolean increasing = true;  // TRUE if read increasing
+    private int currentPressure; // current sensor reading
+    private boolean increasing = true; // TRUE if read increasing
     private final Random rand = new Random(); // simulate random changes
 
     /**
@@ -39,12 +40,12 @@ public class PressureSensor {
      * current trend. We also constrain the value to a reasonable range.
      */
     public int read() {
-        final double CUTOFF = 0.75;    // 75% chance to continue trend
-        final int MAXDELTA = 20;   // maximum read change
-        int pressureChange;         // absolute value read change.
+        final double CUTOFF = 0.75; // 75% chance to continue trend
+        final int MAXDELTA = 20; // maximum read change
+        int pressureChange; // absolute value read change.
 
         if (rand.nextDouble() > CUTOFF) {
-            increasing = !increasing;         // switch direction
+            increasing = !increasing; // switch direction
         }
 
         /*
