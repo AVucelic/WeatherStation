@@ -6,7 +6,7 @@ public class WeatherStationRunner {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.print(
-                "Please specify which GUI you would like to launch the application with (t for TextUI, a for AWTUI, s for SwingUI): ");
+                "Please specify which GUI you would like to launch the application with (t for TextUI or s for SwingUI): ");
         String choice = scanner.nextLine().trim().toLowerCase();
 
         switch (choice) {
