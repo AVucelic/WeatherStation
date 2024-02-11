@@ -28,18 +28,18 @@ import javax.swing.JPanel;
 
 public class SwingUI extends JFrame implements WeatherStationUI {
     TemperatureSensor sensor = new TemperatureSensor();
-    private EnumMap<TemperatureUnit, JLabel> jLabelMap;
+    private EnumMap<MeasurementUnit, JLabel> jLabelMap;
 
     private static Font labelFont = new Font(Font.SERIF, Font.PLAIN, 72);
 
     public SwingUI() {
         super("Weather Station - SwingUI");
 
-        jLabelMap = new EnumMap<>(TemperatureUnit.class);
+        jLabelMap = new EnumMap<>(MeasurementUnit.class);
         this.setLayout(new GridLayout(1, 0));
         JPanel panel = null;
         JLabel label = null;
-        for (TemperatureUnit unit : TemperatureUnit.values()) {
+        for (MeasurementUnit unit : MeasurementUnit.values()) {
             panel = createPanel(unit);
             label = createLabel(unit.name(), panel);
             jLabelMap.put(unit, label);
@@ -68,7 +68,7 @@ public class SwingUI extends JFrame implements WeatherStationUI {
      * @param unit  - temperature unit
      * @param value - temperatue unit value
      */
-    private void setJLabel(TemperatureUnit unit, double value) {
+    private void setJLabel(MeasurementUnit unit, double value) {
         jLabelMap.get(unit).setText(String.format("%6.2f", value));
     }
 

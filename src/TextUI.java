@@ -1,8 +1,5 @@
 
-
 public class TextUI implements WeatherStationUI {
-
-   
 
     public TextUI() {
 
@@ -10,7 +7,7 @@ public class TextUI implements WeatherStationUI {
 
     @Override
     public void update(int reading) {
-        for (TemperatureUnit unit : TemperatureUnit.values()) {
+        for (MeasurementUnit unit : MeasurementUnit.values()) {
             double temperature = unit.get(reading);
 
             System.out.printf("%s: %6.2f\n", unit.name(), temperature);
