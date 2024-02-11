@@ -25,7 +25,10 @@ public enum MeasurementUnit {
     public List<MeasurementUnit> valuesOf(SensorType sensorType) {
         List<MeasurementUnit> list = new ArrayList<MeasurementUnit>();
         for (MeasurementUnit unit : MeasurementUnit.values()) {
-            list.add(unit);
+
+            if (unit.sensorType == sensorType) {
+                list.add(unit);
+            }
         }
         return list;
     }
