@@ -1,3 +1,4 @@
+import java.util.EnumMap;
 import java.util.Scanner;
 
 /**
@@ -15,22 +16,36 @@ import java.util.Scanner;
  */
 public class WeatherStation implements Runnable {
 
-    private final TemperatureSensor sensor; // Temperature sensor.
-
     private final long PERIOD = 1000; // 1 sec = 1000 ms.
 
-    private int reading; // actual sensor reading. /* change */
+    private WeatherStationUI gui;
 
-    private WeatherStationUI wsui;
+    private EnumMap<SensorType, Sensor> sensorMap = new EnumMap<>(SensorType.class);
+
+    private EnumMap<MeasurementUnit, Double> readingMap = new EnumMap<>(MeasurementUnit.class);
 
     /*
      * When a WeatherStation object is created, it in turn creates the sensor
      * object it will use.
      */
-    public WeatherStation(WeatherStationUI wsui) {
-        sensor = new TemperatureSensor();
-        this.wsui = wsui;
+    public WeatherStation(WeatherStationUI gui) {
+        this.gui = gui;
+        for(SensorType sensorType : SensorType.values()){
+            Sensor sensor;
+            switch (sensorType) {
+                case TEMPERATURE:
+                    sensor = new TemperatureSensor();
+                    break;
+                case PRESSURE:
+                    sensor = new PressureSensor();
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unsupported sensor type: " + sensorType);
+            }
+            sensorMap.put(sensorType, sensor);
+        }
     }
+    
 
     /*
      * The "run" method called by the enclosing Thread object when started.
@@ -40,8 +55,8 @@ public class WeatherStation implements Runnable {
     public void run() {
 
         while (true) {
-            reading = sensor.read();
-            wsui.update(reading);
+            this.getSensorReadings();
+            gui.update(readingMap);
 
             /*
              * System.out.printf prints formatted data on the output screen.
@@ -64,6 +79,18 @@ public class WeatherStation implements Runnable {
             try {
                 Thread.sleep(PERIOD);
             } catch (Exception e) {
+            }
+        }
+       
+    }
+    private void getSensorReadings() {
+        Sensor sensor = null;
+        int reading = 0;
+        for (SensorType type : SensorType.values()) {
+            sensor = sensorMap.get(type);
+            reading = sensor.read();
+            for (MeasurementUnit unit : MeasurementUnit.valuesOf(type)) {
+                readingMap.put(unit, unit.get(reading));
             }
         }
     }

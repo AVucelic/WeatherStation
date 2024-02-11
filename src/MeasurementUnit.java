@@ -22,7 +22,7 @@ public enum MeasurementUnit {
         return (reading * cf1 + cf2) / 100.0;
     }
 
-    public List<MeasurementUnit> valuesOf(SensorType sensorType) {
+    public static List<MeasurementUnit> valuesOf(SensorType sensorType) {
         List<MeasurementUnit> list = new ArrayList<MeasurementUnit>();
         for (MeasurementUnit unit : MeasurementUnit.values()) {
 
