@@ -30,22 +30,19 @@ public class SwingUI extends JFrame implements WeatherStationUI {
     TemperatureSensor sensor = new TemperatureSensor();
     private EnumMap<MeasurementUnit, JLabel> jLabelMap;
 
-    private static Font labelFont = new Font(Font.SERIF, Font.PLAIN, 72);
+    private static Font labelFont = new Font(Font.SERIF, Font.PLAIN, 52);
 
     public SwingUI() {
         super("Weather Station - SwingUI");
 
         jLabelMap = new EnumMap<>(MeasurementUnit.class);
         this.setLayout(new GridLayout(1, 0));
-        JPanel panel = null;
-        JLabel label = null;
+
         for (MeasurementUnit unit : MeasurementUnit.values()) {
-            panel = createPanel(unit);
-            label = createLabel(unit.name(), panel);
-            jLabelMap.put(unit, label);
-            label.setFont(new Font(Font.SERIF, Font.PLAIN, 72));
-            this.add(panel, label);
+            JPanel panel = createPanel(unit);
+            this.add(panel);
         }
+
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -78,9 +75,16 @@ public class SwingUI extends JFrame implements WeatherStationUI {
      * @param unit - gets the kind of a unit
      * @return panel
      */
-    private JPanel createPanel(TemperatureUnit unit) {
+    private JPanel createPanel(MeasurementUnit unit) {
         JPanel panel = new JPanel(new GridLayout(2, 1));
-        createLabel(unit.name(), panel);
+        // label for unit name
+        JLabel labelUnitName = createLabel(unit.name());
+        // label for unit value
+        JLabel labelUnitValue = createLabel(" ");
+        //add labels to panel
+        panel.add(labelUnitName);
+        panel.add(labelUnitValue);
+        jLabelMap.put(unit, labelUnitValue);
         return panel;
     }
 
@@ -89,25 +93,24 @@ public class SwingUI extends JFrame implements WeatherStationUI {
      * the specified <panel>, and return a reference to the Label
      * in case the caller wants to remember it.
      */
-    private JLabel createLabel(String title, JPanel panel) {
+    private JLabel createLabel(String title) {
         JLabel label = new JLabel(title);
         label.setHorizontalAlignment(JLabel.CENTER);
         label.setVerticalAlignment(JLabel.TOP);
         label.setFont(labelFont);
         label.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        panel.add(label);
         return label;
     }
 
     /**
-     * Update values for the AWTUI interface
+     * Update values for the SwingUI class
      * 
      * @param reading - the value for the sensor that is currently reading
      */
     @Override
-    public void update(int reading) {
-        for (TemperatureUnit unit : TemperatureUnit.values()) {
-            setJLabel(unit, unit.get(reading));
+    public void update(EnumMap<MeasurementUnit, Double> enumMap) {
+        for (MeasurementUnit unit : MeasurementUnit.values()) {
+            setJLabel(unit, enumMap.get(unit));
         }
     }
 
