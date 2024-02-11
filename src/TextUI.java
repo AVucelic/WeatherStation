@@ -1,3 +1,4 @@
+import java.util.EnumMap;
 
 public class TextUI implements WeatherStationUI {
 
@@ -6,11 +7,11 @@ public class TextUI implements WeatherStationUI {
     }
 
     @Override
-    public void update(int reading) {
+    public void update(EnumMap<MeasurementUnit, Double> enumMap) {
         for (MeasurementUnit unit : MeasurementUnit.values()) {
-            double temperature = unit.get(reading);
+            double reading = enumMap.get(unit);
 
-            System.out.printf("%s: %6.2f\n", unit.name(), temperature);
+            System.out.printf("%s: %6.2f\n", unit.name(), reading);
         }
     }
 
