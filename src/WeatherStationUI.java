@@ -1,3 +1,6 @@
+import java.util.EnumMap;
+
 public interface WeatherStationUI {
-    public void update(int reading);
+
+    public void update(EnumMap<MeasurementUnit, Double> enumMap);
 }
