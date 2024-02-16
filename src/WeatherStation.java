@@ -1,5 +1,4 @@
 import java.util.EnumMap;
-import java.util.Scanner;
 
 /**
  * Class for a simple computer based weather station that reports the current
