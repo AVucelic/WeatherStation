@@ -26,15 +26,16 @@ import javax.swing.JPanel;
 
 //import java.text.DecimalFormat ;
 
-public class SwingUI extends JFrame implements WeatherStationUI {
-    TemperatureSensor sensor = new TemperatureSensor();
+public class SwingUI extends JFrame implements Observer {
+    // TemperatureSensor sensor = new TemperatureSensor();
     private EnumMap<MeasurementUnit, JLabel> jLabelMap;
-
+    private final WeatherStation station;
     private static Font labelFont = new Font(Font.SERIF, Font.PLAIN, 52);
 
-    public SwingUI() {
+    public SwingUI(WeatherStation station) {
         super("Weather Station - SwingUI");
-
+        this.station = station;
+        this.station.attach(this);
         jLabelMap = new EnumMap<>(MeasurementUnit.class);
         this.setLayout(new GridLayout(1, 0));
 
@@ -81,7 +82,7 @@ public class SwingUI extends JFrame implements WeatherStationUI {
         JLabel labelUnitName = createLabel(unit.name());
         // label for unit value
         JLabel labelUnitValue = createLabel(" ");
-        //add labels to panel
+        // add labels to panel
         panel.add(labelUnitName);
         panel.add(labelUnitValue);
         jLabelMap.put(unit, labelUnitValue);
@@ -107,10 +108,10 @@ public class SwingUI extends JFrame implements WeatherStationUI {
      * 
      * @param reading - the value for the sensor that is currently reading
      */
-    @Override
-    public void update(EnumMap<MeasurementUnit, Double> enumMap) {
+
+    public void update() {
         for (MeasurementUnit unit : MeasurementUnit.values()) {
-            setJLabel(unit, enumMap.get(unit));
+            setJLabel(unit, station.getReading(unit));
         }
     }
 
