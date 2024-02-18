@@ -17,8 +17,6 @@ public class WeatherStation extends Subject implements Runnable {
 
     private final long PERIOD = 1000; // 1 sec = 1000 ms.
 
-    private WeatherStationUI gui;
-
     private EnumMap<SensorType, Sensor> sensorMap = new EnumMap<>(SensorType.class);
 
     private EnumMap<MeasurementUnit, Double> readingMap = new EnumMap<>(MeasurementUnit.class);
@@ -27,8 +25,8 @@ public class WeatherStation extends Subject implements Runnable {
      * When a WeatherStation object is created, it in turn creates the sensor
      * object it will use.
      */
-    public WeatherStation(WeatherStationUI gui) {
-        this.gui = gui;
+    public WeatherStation() {
+
         for (SensorType sensorType : SensorType.values()) {
             Sensor sensor;
             switch (sensorType) {
@@ -54,7 +52,7 @@ public class WeatherStation extends Subject implements Runnable {
 
         while (true) {
             this.getSensorReadings();
-            gui.update(readingMap);
+            super.notifyObservers();
 
             /*
              * System.out.printf prints formatted data on the output screen.
@@ -80,7 +78,6 @@ public class WeatherStation extends Subject implements Runnable {
             } catch (Exception e) {
             }
         }
-
     }
 
     private void getSensorReadings() {

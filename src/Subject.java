@@ -39,7 +39,7 @@ public class Subject{
      * of its observers.Each observer has its <code>update</code> method called
      * by this method.
      */
-    public void notifyObserver(Observer o){
+    public void notifyObservers(){
         observers.forEach(observers -> {
             observers.update();
         });
