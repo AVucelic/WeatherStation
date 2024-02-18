@@ -1,16 +1,17 @@
-import java.util.EnumMap;
 
-public class TextUI implements WeatherStationUI {
+public class TextUI implements Observer {
 
-    public TextUI() {
+    private final WeatherStation station;
 
+    public TextUI(WeatherStation station) {
+        this.station = station;
+        this.station.attach(this);
     }
 
     @Override
-    public void update(EnumMap<MeasurementUnit, Double> enumMap) {
+    public void update() {
         for (MeasurementUnit unit : MeasurementUnit.values()) {
-            double reading = enumMap.get(unit);
-
+            double reading = station.getReading(unit);
             System.out.printf("%s: %6.2f\n", unit.name(), reading);
         }
     }
