@@ -29,7 +29,7 @@ public class WeatherStation implements Runnable {
      */
     public WeatherStation(WeatherStationUI gui) {
         this.gui = gui;
-        for(SensorType sensorType : SensorType.values()){
+        for (SensorType sensorType : SensorType.values()) {
             Sensor sensor;
             switch (sensorType) {
                 case TEMPERATURE:
@@ -44,7 +44,6 @@ public class WeatherStation implements Runnable {
             sensorMap.put(sensorType, sensor);
         }
     }
-    
 
     /*
      * The "run" method called by the enclosing Thread object when started.
@@ -73,15 +72,17 @@ public class WeatherStation implements Runnable {
              * See docs.oracle.com/javase/tutorial/java/data/numberformat.html
              * for more information on formatting output.
              */
-            // System.out.printf("Reading is%6.2f degrees C and %6.2f degrees K%n", TemperatureUnit.CELSIUS.get(reading),
-            //         TemperatureUnit.KELVIN.get(reading));
+            // System.out.printf("Reading is%6.2f degrees C and %6.2f degrees K%n",
+            // TemperatureUnit.CELSIUS.get(reading),
+            // TemperatureUnit.KELVIN.get(reading));
             try {
                 Thread.sleep(PERIOD);
             } catch (Exception e) {
             }
         }
-       
+
     }
+
     private void getSensorReadings() {
         Sensor sensor = null;
         int reading = 0;
@@ -94,4 +95,7 @@ public class WeatherStation implements Runnable {
         }
     }
 
+    private double getReading(MeasurementUnit mu) {
+        return readingMap.get(mu);
+    }
 }
