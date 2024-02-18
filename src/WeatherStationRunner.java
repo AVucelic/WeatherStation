@@ -11,7 +11,7 @@ public class WeatherStationRunner {
 
         switch (choice) {
             case "t":
-                gui = new TextUI();
+                TextUI text = new TextUI();
                 break;
             // case "a":
             // gui = new AWTUI();
