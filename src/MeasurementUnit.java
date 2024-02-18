@@ -12,6 +12,10 @@ public enum MeasurementUnit {
     private final double cf2;
     private final SensorType sensorType;
 
+    public SensorType getSensorType() {
+        return sensorType;
+    }
+
     private MeasurementUnit(SensorType sensorType, double conversionFactor1, double conversionFactor2) {
         this.cf1 = conversionFactor1;
         this.cf2 = conversionFactor2;
