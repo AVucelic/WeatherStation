@@ -96,8 +96,6 @@ public class WeatherStation implements Runnable {
     }
 
     private double getReading(MeasurementUnit mu) {
-        Sensor sensor = sensorMap.get(mu.getSensorType());
-        int reading = sensor.read();
-        return mu.get(reading);
+        return readingMap.get(mu);
     }
 }
