@@ -13,7 +13,7 @@ import java.util.EnumMap;
  * @author Kristina Marasovic
  * @version 1
  */
-public class WeatherStation implements Runnable {
+public class WeatherStation extends Subject implements Runnable {
 
     private final long PERIOD = 1000; // 1 sec = 1000 ms.
 
@@ -95,7 +95,7 @@ public class WeatherStation implements Runnable {
         }
     }
 
-    private double getReading(MeasurementUnit mu) {
+    public double getReading(MeasurementUnit mu) {
         return readingMap.get(mu);
     }
 }
