@@ -1,3 +1,4 @@
+package edu.rit.croatia.swen383.g1.ws.sensor;
 
 /**
  * Class for a (simulated) barometer. We assume the "real" barometer returns an

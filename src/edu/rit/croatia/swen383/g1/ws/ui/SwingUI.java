@@ -1,3 +1,4 @@
+package edu.rit.croatia.swen383.g1.ws.ui;
 /*
  * Initial Author
  *      Michael J. Lutz
@@ -23,6 +24,10 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import edu.rit.croatia.swen383.g1.ws.WeatherStation;
+import edu.rit.croatia.swen383.g1.ws.observer.Observer;
+import edu.rit.croatia.swen383.g1.ws.util.MeasurementUnit;
 
 //import java.text.DecimalFormat ;
 

@@ -1,4 +1,13 @@
+package edu.rit.croatia.swen383.g1.ws;
 import java.util.EnumMap;
+
+import edu.rit.croatia.swen383.g1.ws.observer.Subject;
+import edu.rit.croatia.swen383.g1.ws.sensor.PressureSensor;
+import edu.rit.croatia.swen383.g1.ws.sensor.Sensor;
+import edu.rit.croatia.swen383.g1.ws.sensor.TemperatureSensor;
+import edu.rit.croatia.swen383.g1.ws.util.MeasurementUnit;
+import edu.rit.croatia.swen383.g1.ws.util.SensorType;
+
 
 /**
  * Class for a simple computer based weather station that reports the current

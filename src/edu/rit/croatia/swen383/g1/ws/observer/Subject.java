@@ -1,3 +1,4 @@
+package edu.rit.croatia.swen383.g1.ws.observer;
 import java.util.ArrayList;
 
 public class Subject{

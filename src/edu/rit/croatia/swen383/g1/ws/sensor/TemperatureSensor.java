@@ -1,3 +1,4 @@
+package edu.rit.croatia.swen383.g1.ws.sensor;
 
 /**
  * Class for a (simulated) sensor of the temperature. We assume the "real"

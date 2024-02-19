@@ -1,3 +1,8 @@
+package edu.rit.croatia.swen383.g1.ws.ui;
+
+import edu.rit.croatia.swen383.g1.ws.WeatherStation;
+import edu.rit.croatia.swen383.g1.ws.observer.Observer;
+
 public class StatisticsDisplay implements Observer {
 
     private final WeatherStation station;
