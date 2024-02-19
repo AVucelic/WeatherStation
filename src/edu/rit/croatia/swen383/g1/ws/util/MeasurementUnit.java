@@ -1,3 +1,4 @@
+package edu.rit.croatia.swen383.g1.ws.util;
 import java.util.ArrayList;
 import java.util.List;
 
