@@ -3,7 +3,6 @@ import java.util.Scanner;
 
 import edu.rit.croatia.swen383.g1.ws.ui.SwingUI;
 import edu.rit.croatia.swen383.g1.ws.ui.TextUI;
-
 public class WeatherStationRunner {
 
     public static void main(String[] args) {
