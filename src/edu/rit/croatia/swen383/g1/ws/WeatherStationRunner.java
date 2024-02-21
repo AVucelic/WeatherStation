@@ -1,8 +1,8 @@
 package edu.rit.croatia.swen383.g1.ws;
 import java.util.Scanner;
 
-import edu.rit.croatia.swen383.g1.ws.ui.SwingUI;
-import edu.rit.croatia.swen383.g1.ws.ui.TextUI;
+import edu.rit.croatia.swen383.g1.ws.factory.UIFactory;
+import edu.rit.croatia.swen383.g1.ws.util.UIType;
 public class WeatherStationRunner {
 
     public static void main(String[] args) {
@@ -11,15 +11,18 @@ public class WeatherStationRunner {
                 "Please specify which GUI you would like to launch the application with (t for TextUI or s for SwingUI): ");
         String choice = scanner.nextLine().trim().toLowerCase();
         WeatherStation ws = new WeatherStation();
+        
+        UIFactory.setStation(ws);
+
         switch (choice) {
             case "t":
-                new TextUI(ws);
+                UIFactory.get(UIType.TEXTUI);
                 break;
             case "s":
-                new SwingUI(ws);
+                UIFactory.get(UIType.SWINGUI);
                 break;
             default:
-                new SwingUI(ws);
+                 UIFactory.get(UIType.SWINGUI);
                 break;
         }
 
