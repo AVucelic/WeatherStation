@@ -11,8 +11,8 @@ public class UIFactory {
     static UIType _type;
     static private WeatherStation station;
 
-    public UIFactory() {
-
+    public static void setStation(WeatherStation ws) {
+        station = ws;
     }
 
     public static Observer get(UIType type) {
