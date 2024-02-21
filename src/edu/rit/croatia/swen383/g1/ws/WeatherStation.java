@@ -1,13 +1,12 @@
 package edu.rit.croatia.swen383.g1.ws;
+
 import java.util.EnumMap;
 
+import edu.rit.croatia.swen383.g1.ws.factory.SensorFactory;
 import edu.rit.croatia.swen383.g1.ws.observer.Subject;
-import edu.rit.croatia.swen383.g1.ws.sensor.PressureSensor;
 import edu.rit.croatia.swen383.g1.ws.sensor.Sensor;
-import edu.rit.croatia.swen383.g1.ws.sensor.TemperatureSensor;
 import edu.rit.croatia.swen383.g1.ws.util.MeasurementUnit;
 import edu.rit.croatia.swen383.g1.ws.util.SensorType;
-
 
 /**
  * Class for a simple computer based weather station that reports the current
@@ -35,20 +34,8 @@ public class WeatherStation extends Subject implements Runnable {
      * object it will use.
      */
     public WeatherStation() {
-
         for (SensorType sensorType : SensorType.values()) {
-            Sensor sensor;
-            switch (sensorType) {
-                case TEMPERATURE:
-                    sensor = new TemperatureSensor();
-                    break;
-                case PRESSURE:
-                    sensor = new PressureSensor();
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unsupported sensor type: " + sensorType);
-            }
-            sensorMap.put(sensorType, sensor);
+            sensorMap.put(sensorType, SensorFactory.get(sensorType));
         }
     }
 
@@ -95,7 +82,9 @@ public class WeatherStation extends Subject implements Runnable {
         for (SensorType type : SensorType.values()) {
             sensor = sensorMap.get(type);
             reading = sensor.read();
+
             for (MeasurementUnit unit : MeasurementUnit.valuesOf(type)) {
+
                 readingMap.put(unit, unit.get(reading));
             }
         }
