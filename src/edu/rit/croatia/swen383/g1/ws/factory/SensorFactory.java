@@ -11,7 +11,8 @@ public class SensorFactory {
 
     }
 
-    public Sensor get(SensorType sensorType) {
+    public static Sensor get(SensorType sensorType) { // Ejup and I added the "static" keyword in Discord together, as
+                                                      // we were trying to figure out the UIFactory error.
         Sensor sensor;
         switch (sensorType) {
             case TEMPERATURE:
