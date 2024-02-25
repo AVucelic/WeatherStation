@@ -1,5 +1,6 @@
 package edu.rit.croatia.swen383.g1.ws.factory;
 
+import edu.rit.croatia.swen383.g1.ws.sensor.HumiditySensor;
 import edu.rit.croatia.swen383.g1.ws.sensor.PressureSensor;
 import edu.rit.croatia.swen383.g1.ws.sensor.Sensor;
 import edu.rit.croatia.swen383.g1.ws.sensor.TemperatureSensor;
@@ -20,6 +21,9 @@ public class SensorFactory {
                 break;
             case PRESSURE:
                 sensor = new PressureSensor();
+                break;
+            case HUMIDITY:
+                sensor = new HumiditySensor();
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported sensor type: " + sensorType);
