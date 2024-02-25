@@ -25,15 +25,16 @@ public class WeatherStation extends Subject implements Runnable {
 
     private final long PERIOD = 1000; // 1 sec = 1000 ms.
 
-    private EnumMap<SensorType, Sensor> sensorMap = new EnumMap<>(SensorType.class);
-
+   // private EnumMap<SensorType, Sensor> sensorMap = new EnumMap<>(SensorType.class);
+    private EnumMap<SensorType, Sensor> sensorMap;
     private EnumMap<MeasurementUnit, Double> readingMap = new EnumMap<>(MeasurementUnit.class);
 
     /*
      * When a WeatherStation object is created, it in turn creates the sensor
      * object it will use.
      */
-    public WeatherStation() {
+    public WeatherStation(EnumMap<SensorType, Sensor> sensorMap) {
+        this.sensorMap = sensorMap;
         for (SensorType sensorType : SensorType.values()) {
             sensorMap.put(sensorType, SensorFactory.get(sensorType));
         }
@@ -83,7 +84,7 @@ public class WeatherStation extends Subject implements Runnable {
             sensor = sensorMap.get(type);
             reading = sensor.read();
 
-            for (MeasurementUnit unit : MeasurementUnit.valuesOf(type)) {
+            for (MeasurementUnit unit : MeasurementUnit.valueOf(type)) {
 
                 readingMap.put(unit, unit.get(reading));
             }
