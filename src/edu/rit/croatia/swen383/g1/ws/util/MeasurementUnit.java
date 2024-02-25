@@ -1,33 +1,41 @@
 package edu.rit.croatia.swen383.g1.ws.util;
+
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Enum for sensor units. The Enum comes with a get method that converts a
+ * reading to the appropriate unit.
+ *
+ * @author Kristina Marasovic <kristina.marasovic@rit.edu>
+ */
 public enum MeasurementUnit {
-    CELSIUS(SensorType.TEMPERATURE, 1, -27315),
+
     KELVIN(SensorType.TEMPERATURE, 1, 0),
+    CELSIUS(SensorType.TEMPERATURE, 1, -27315),
     FAHRENHEIT(SensorType.TEMPERATURE, 1.8, -45967),
-    INHG(SensorType.TEMPERATURE, 1, 0),
-    MBAR(SensorType.TEMPERATURE, 33.864, 0);
+    INHG(SensorType.PRESSURE, 1, 0),
+    MBAR(SensorType.PRESSURE, 33.8639, 0),
+    PCT(SensorType.HUMIDITY, 100, 0);
 
-    private final double cf1;
+    private final SensorType type; //conversion factor
+    private final double cf1; //conversion factor
     private final double cf2;
-    private final SensorType sensorType;
 
-    private MeasurementUnit(SensorType sensorType, double conversionFactor1, double conversionFactor2) {
-        this.cf1 = conversionFactor1;
-        this.cf2 = conversionFactor2;
-        this.sensorType = sensorType;
+    MeasurementUnit(SensorType type, double cf1, double cf2) {
+        this.type = type;
+        this.cf1 = cf1;
+        this.cf2 = cf2;
     }
 
     public double get(int reading) {
-        return (reading * cf1 + cf2) / 100.0;
+        return (cf1 * reading + cf2) / 100.0;
     }
 
-    public static List<MeasurementUnit> valuesOf(SensorType sensorType) {
-        List<MeasurementUnit> list = new ArrayList<MeasurementUnit>();
-        for (MeasurementUnit unit : MeasurementUnit.values()) {
-
-            if (unit.sensorType == sensorType) {
+    public static List<MeasurementUnit> valueOf(SensorType type) {
+        List<MeasurementUnit> list = new ArrayList();
+        for (MeasurementUnit unit : values()) {
+            if (unit.type.equals(type)) {
                 list.add(unit);
             }
         }
