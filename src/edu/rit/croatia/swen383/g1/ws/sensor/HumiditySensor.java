@@ -1,14 +1,20 @@
 package edu.rit.croatia.swen383.g1.ws.sensor;
 
+import edu.rit.marasovic.swen383.thirdparty.sensor.HumidityReader;
+
 public class HumiditySensor implements Sensor {
+    private HumidityReader humidityReader;
+
     public HumiditySensor() {
 
     }
 
     @Override
     public int read() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'read'");
+        if (humidityReader == null) {
+            throw new IllegalStateException("Library not initalized.");
+        }
+        return humidityReader.get();
     }
 
 }
