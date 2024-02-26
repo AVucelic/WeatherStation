@@ -6,7 +6,7 @@ public class HumiditySensor implements Sensor {
     private HumidityReader humidityReader;
 
     public HumiditySensor() {
-
+        this.humidityReader = new HumidityReader();
     }
 
     @Override
