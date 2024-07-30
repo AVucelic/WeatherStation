@@ -23,4 +23,4 @@ Weather Station is a Java application designed to monitor and track air temperat
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/air-quality-tracker.git
+   git clone https://github.com/your-username/WeatherStation.git
